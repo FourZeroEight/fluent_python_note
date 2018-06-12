@@ -45,7 +45,6 @@ my_dict.setdefault(key, []).append(new_value)
 ```
 
 ## Mappings with Flexible Key Lookup
-
 - 方法1: defaultdict
 - 方法2: 繼承 dict 或 其他的 mapping type, 改寫 `__missing__` method
 
@@ -56,7 +55,6 @@ and  k  is a missing key,  dd[k]  will call the  default_factory  to create a de
 but dd.get(k)  still returns  None .
 
 ## The `__missing__` Method
-
 ``` python
 """方法2"""
 class StrKeyDict0(dict):   
@@ -77,7 +75,6 @@ class StrKeyDict0(dict):
 略
 
 ## Subclassing UserDict
-
 * 如果要override內建dict的method, 避免直接繼承, 而是要用UserDict實作並修改
 > The main reason why it’s preferable to subclass from UserDict than dict is that the
 built-in has some implementation shortcuts that end up forcing us to override methods
@@ -115,14 +112,14 @@ from types import MappingProxyType
 略
 
 ## Set Theory
-
 * '集合' 並非 hashable, 但是 '集合' 裡的 '元素' 必須是 hashable !
+*  The  'set' type is not hashable, but  'frozenset' is.
+
 > Set elements must be hashable. The  set type is not hashable, but  frozenset is, so you
 can have  frozenset elements inside a  set.
 
 ## set Literals
-
-* 建 '集合' 用 {1, 2, 3} 比較有效率, 可讀性也高 
+* 建 '集合' 用 {1, 2, 3} 比 set([1, 2, 3]) 有效率, 可讀性也高 
 ``` python
 """
 Literal set syntax like {1, 2, 3} is both faster and more readable than calling the
@@ -142,4 +139,38 @@ constructor (e.g., set([1, 2, 3])).
 ```
 
 ## Set Comprehensions
+``` python
+>>> from unicodedata import name  
+>>> {chr(i) for i in range(32, 256) if 'SIGN' in name(chr(i),'')}  
+{'§', '=', '¢', '#', '¤', '<', '¥', 'µ', '×', '$', '¶', '£', '©',
+'°', '+', '÷', '±', '>', '¬', '®', '%'}
+```
+
+## Set Operations
+略
+
+## dict and set Under the Hood
+* How efficient are Python  dict and  set?
+* Why are they unordered?
+* Why can’t we use any Python object as a  dict key or  set element?
+* Why does the order of the dict keys or set elements depend on insertion order,
+and may change during the lifetime of the structure?
+* Why is it bad to add items to a  dict or  set while iterating through it?
+
+## A Performance Experiment
+實驗 略
+
+## Hash Tables in Dictionaries
+
+### Hashes and equality
+> If two objects compare equal, their hash values must 
+also be equal, otherwise the hash table algorithm does not work
+
+
+
+
+
+
+
+
 
