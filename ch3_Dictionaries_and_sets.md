@@ -163,14 +163,33 @@ and may change during the lifetime of the structure?
 ## Hash Tables in Dictionaries
 
 ### Hashes and equality
-> If two objects compare equal, their hash values must 
-also be equal, otherwise the hash table algorithm does not work
+> If two objects compare equal, their hash values must
+also be equal, otherwise the hash table algorithm does not work. For example, because
+1 == 1.0 is true, hash(1) == hash(1.0) must also be true, even though the internal
+representation of an  int and a  float are very different.
 
+### The hash table algorithm
+略, 查表流程之後需要再花時間看
 
+## Practical Consequences of How dict Works
+### Keys must be hashable objects
+1. 必須要有 `__hash__`, `__eq__`
+2. If  a == b is  True then  hash(a) == hash(b) must also be  True.
 
+### dicts have significant memory overhead
+* 存大量的紀錄, 用 list of tuples 或 named tuples 比 list of dicts 還省空間
+* 移除每筆記錄的 hash table占用的空間
+* 不需要每個dict都存一樣的欄位名稱
 
+### Key search is very fast
+看實驗數據, 略
 
+### Key ordering depends on insertion order
+當增加新的元素給dict, 直譯器會判斷 hash table有加大的需求, 而搬動整個 table 到新的table,
+導致dict內的keys排序**可能**會有變化.
 
+所以, 在iteration過程中, 不建議直接更動dict內容.
+解決方法: 在iteration過程中, 將需要更新的值存在另個 dict, 最後再 update 原本的 dict
 
-
-
+## How Sets Work—Practical Consequences
+略
