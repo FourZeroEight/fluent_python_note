@@ -26,8 +26,10 @@ account its internal state, it may be hashable only if all its attributes are im
 
 ## Overview of Common Mapping Methods
 1. `d.get(k, [default])`
-2. `d.__getitem__(k)`: 等於 `d[k]`
+2. `d.__getitem__(k)`: 等於 `d[k]` operator
 3. `d.__missing__(k)`: 當 `__getitem__`找不到key值, 會呼叫此method
+4. `d.setdefault(k, [default])`
+4. `d.__setitem__(k, v)`: 等於`d[k] = v` operator
 4. `d.default_factory`: Callable invoked by `__missing__` to set missing values
 
 ## Handling Missing Keys with setdefault
@@ -44,8 +46,8 @@ my_dict.setdefault(key, []).append(new_value)
 
 ## Mappings with Flexible Key Lookup
 
-方法1: defaultdict
-方法2: 繼承 dict 或 其他的 mapping type, 改寫 `__missing__` method
+- 方法1: defaultdict
+- 方法2: 繼承 dict 或 其他的 mapping type, 改寫 `__missing__` method
 
 ##  還不太能理解 default_factory 如何解釋 ??
 > The  **default_factory** of a defaultdict is only invoked to providedefault values for
@@ -100,5 +102,44 @@ class StrKeyDict(collections.UserDict):
         self.data[str(key)] = item
 ```
 
+## 不懂這段??
+> Because  UserDict  subclasses  MutableMapping,  the  remaining  methods  that  make
+StrKeyDict a full-fledged mapping are inherited from UserDict, MutableMapping, or
+Mapping. The latter have several useful concrete methods, in spite of being abstract base
+classes (ABCs).
 
+## Immutable Mappings
+``` python
+from types import MappingProxyType
+```
+略
+
+## Set Theory
+
+* '集合' 並非 hashable, 但是 '集合' 裡的 '元素' 必須是 hashable !
+> Set elements must be hashable. The  set type is not hashable, but  frozenset is, so you
+can have  frozenset elements inside a  set.
+
+## set Literals
+
+* 建 '集合' 用 {1, 2, 3} 比較有效率, 可讀性也高 
+``` python
+"""
+Literal set syntax like {1, 2, 3} is both faster and more readable than calling the
+constructor (e.g., set([1, 2, 3])).
+"""
+>>> from dis import dis
+>>> dis('{1}')                                   
+  1           0 LOAD_CONST               0 (1)
+              3 BUILD_SET                1       
+              6 RETURN_VALUE
+>>> dis('set([1])')                              
+  1           0 LOAD_NAME                0 (set) 
+              3 LOAD_CONST               0 (1)
+              6 BUILD_LIST               1
+              9 CALL_FUNCTION            1 (1 positional, 0 keyword pair)
+             12 RETURN_VALUE
+```
+
+## Set Comprehensions
 
