@@ -122,4 +122,60 @@ of slicing operations, which are more powerful than most people realize.
 [['_', '_', 'O'], ['_', '_', 'O'], ['_', '_', 'O']]
 ```
 
+## Augmented Assignment with Sequences
+### A += Assignment Puzzler
+* 特別案例, 所以, 盡量避免在 tuple 裡放 mutable type
+``` python
+>>> t = (1, 2, [30, 40])
+>>> t[2] += [50, 60]
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: 'tuple' object does not support item assignment
+>>> t
+(1, 2, [30, 40, 50, 60])
+```
+
+* 檢查 bytebode的流程
+``` python
+import dis
+dis.dis('s[a] += b')
+  1           0 LOAD_NAME                0 (s)
+              3 LOAD_NAME                1 (a)
+              6 DUP_TOP_TWO
+              7 BINARY_SUBSCR                      
+              8 LOAD_NAME                2 (b)
+             11 INPLACE_ADD                        
+             12 ROT_THREE
+             13 STORE_SUBSCR                       
+             14 LOAD_CONST               0 (None)
+             17 RETURN_VALUE
+```
+### list.sort and the sorted Built-In Function
+* list.sort() -> 原地排序
+* sorted() -> 回傳新的物件
+
+### Managing Ordered Sequences with bisect
+## Searching with bisect
+略
+## Inserting with bisect.insort
+略
+
+### When a List Is Not the Answer
+* array: 適合存放大量浮點數
+* deque: 常常需要在頭尾做更動 as FIFO or LIFO
+
+## Arrays
+略
+
+## Memory Views
+要再花時間深究, 略
+
+## NumPy and SciPy
+略
+## Deques and Other Queues
+略
+
+
+
+
 
