@@ -1,6 +1,10 @@
 # 3. Dictionaries and sets
 
 ## Generic Mapping Types
+### 要再花時間了解之間的繼承關係 ???
+> The collections.abc module provides the Mapping and MutableMapping ABCs to
+formalize the interfaces of  dict and similar types
+
 * 有用到 dict 的 mapping types, 都必須遵守 key 必須是 hashable 的限制.
 > All mapping types in the standard library use the basic dict in their implementation,
 so they share the limitation that the keys must be hashable (the values need not be
@@ -192,4 +196,11 @@ representation of an  int and a  float are very different.
 解決方法: 在iteration過程中, 將需要更新的值存在另個 dict, 最後再 update 原本的 dict
 
 ## How Sets Work—Practical Consequences
+* Set elements must be hashable objects.
+* Sets have a significant memory overhead.
+* Membership testing is very efficient.
+* Element ordering depends on insertion order.
+* Adding elements to a set may change the order of other elements.
+
+## Chapter Summary
 略
