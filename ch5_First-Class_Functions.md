@@ -1,4 +1,9 @@
-# 5. First-class functions (一階函數)
+# 5. First-class functions (一級函數)
+一級物件的定義:
+* created at runtime;
+* assigned to a variable or element in a data structure;
+* passed as an argument to a function;
+* returned as the result of a function.
 
 ## Treating a function like an object
 >  the function object itself is an instance of the  function class
@@ -29,5 +34,40 @@
 ```
 
 ## Modern replacements for map, filter and reduce
+* listcomp, genexp 可以取代 map, filter 的工作
+* 用sum()等方法可以取代 reduce
+
+## Anonymous functions
+略
+
+## The seven flavors of callable objects
+1. User-defined functions
+2. Built-in functions
+3. Built-in methods
+4. Methods
+5. Classes
+6. Class instances
+7. Generator functions
+
+## User defined callable types
+``` python
+def __init__(self, items):
+    self._items = list(items)   
+    random.shuffle(self._items)   
+def pick(self):   
+    try:
+        return self._items.pop()
+    except IndexError:
+        raise LookupError('pick from empty BingoCage')   
+def __call__(self):
+    return self.pick()
+```
+
+## Function 
+__call__
+...
+
+## 
+
 
 
