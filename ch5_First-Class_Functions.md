@@ -88,7 +88,10 @@ def __call__(self):
 '__get__', '__globals__', '__kwdefaults__', '__name__', '__qualname__']
 ```
 ## From positional to keyword-only parameters
+略
 
+## Retrieving information about parameters
+* 主要說明 inspect 模組的運作, 說明太複雜, 看不太懂 
 
 
 
