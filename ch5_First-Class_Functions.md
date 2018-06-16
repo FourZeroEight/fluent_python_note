@@ -34,20 +34,32 @@
 ```
 
 ## Modern replacements for map, filter and reduce
-* listcomp, genexp 可以取代 map, filter 的工作
-* 用sum()等方法可以取代 reduce
+* map, filter 會回傳 generator, 所以用 genexp可以直接替代很多工作, 又能提高可讀性
+* 後面章節會細談 reduce
 
 ## Anonymous functions
 略
 
 ## The seven flavors of callable objects
-1. User-defined functions
-2. Built-in functions
+> The Python Data Model documentation lists seven callable types:
+1. User-defined functions: len, time.strftime
+2. Built-in functions: dict.get
 3. Built-in methods
 4. Methods
 5. Classes
+當類別被呼叫時, 會執行它的\_\_new\_\_, 再執行\_\_init\_\_把他初始化, 最後把instance回傳給呼叫方. 
 6. Class instances
+如果類別有定義\_\_call\_\_方法, 那他的instance就可以被呼叫
 7. Generator functions
+使用 yield keyword, 當被呼叫會回傳一個 generator object
+
+``` python
+# the safest way to  determine  whether  an  object  is  callable  is  to  use  the  callable() built-in:
+>>> abs, str, 13
+(<built-in function abs>, <class 'str'>, 13)
+>>> [callable(obj) for obj in (abs, str, 13)]
+[True, True, False]
+```
 
 ## User defined callable types
 ``` python
@@ -63,11 +75,20 @@ def __call__(self):
     return self.pick()
 ```
 
-## Function 
-__call__
-...
+## Function introspection (函式自我檢查)
+* 在 function 裡有的 attributes 在 user-defined object 不見得都有 
+``` python
+>>> class C:
+        pass
+>>> obj = C()
+>>> def func():
+        pass
+>>> sorted(set(dir(func)) - set(dir(obj)))
+['__annotations__', '__call__', '__closure__', '__code__', '__defaults__',
+'__get__', '__globals__', '__kwdefaults__', '__name__', '__qualname__']
+```
+## From positional to keyword-only parameters
 
-## 
 
 
 
