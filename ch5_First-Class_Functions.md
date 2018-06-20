@@ -88,10 +88,81 @@ def __call__(self):
 '__get__', '__globals__', '__kwdefaults__', '__name__', '__qualname__']
 ```
 ## From positional to keyword-only parameters
-略
+太雜了, 略
 
 ## Retrieving information about parameters
-* 主要說明 inspect 模組的運作, 說明太複雜, 看不太懂 
+* 利用 inspect 取代內建特殊方法來取參數值, 需要再看, 略
 
+## Function Annotations
+* 函式註解會存在__annotations__, 但Python不會主動檢查, 驗證
+* 需要手動檢查(inspect.signature())或是提供給IDE檢查
 
+> The  only  thing  Python  does  with  annotations  is  to  store  them  in  the  **\_\_annota
+tions\_\_** attribute of the function. Nothing else: no checks, enforcement, validation, or
+any other action is performed. In other words, annotations have no meaning to the
+Python interpreter. They are just metadata that may be used by tools, such as **IDEs**,
+**frameworks**, and **decorators**. 
+
+``` python
+def clip(text:str, max_len:'int > 0'=80) -> str:
+    pass
+clip.__annotations__
+# {'text': <class 'str'>, 'max_len': 'int > 0', 'return': <class 'str'>}
+```
+
+## Packages for Functional Programming
+* operator
+* functools
+
+### The operator Module
+* 儘管前面章節提到reduce可以被內建operator(e.g. sum())取代, 但仍有許多情境需要用到(e.g. mul)
+``` python
+from functools import reduce
+def fact(n):
+    return reduce(lambda a, b: a*b, range(1, n+1))
+```
+*   operator module 提供 functions 可以不必寫 anonymous finctions
+``` python
+from functools import reduce
+from operator import mul
+def fact(n):
+    return reduce(mul, range(1, n+1))
+```
+* operator.itemgetter, operator.attrgetter 應用在排序上
+``` python
+>>> from operator import itemgetter
+>>> for city in sorted(metro_data, key=itemgetter(1)):
+...     print(city)
+```
+> itemgetter supports not only sequences but also mappings and any class that implements  \_\_getitem\_\_.
+* operator.attrgetter, 範例看不太懂, 略
+* operator.methodcaller, 範例看不太懂, 略
+
+### Freezing Arguments with functools.partial
+* 可以把function的多個參數綁住, 使用者只需要輸入部分參數就好
+> This is useful to adapt a function that takes
+one  or  more  arguments  to  an  API  that  requires  a  callback  with  fewer  arguments.
+``` python
+>>> from operator import mul
+>>> from functools import partial
+>>> triple = partial(mul, 3)
+>>> triple(7)  
+21
+>>> list(map(triple, range(1, 10)))  
+[3, 6, 9, 12, 15, 18, 21, 24, 27]
+```
+``` python
+>>> import unicodedata, functools
+>>> nfc = functools.partial(unicodedata.normalize, 'NFC')
+>>> s1 = 'café'
+>>> s2 = 'cafe\u0301'
+>>> s1, s2
+('café', 'café')
+>>> s1 == s2
+False
+>>> nfc(s1) == nfc(s2)
+True
+```
+## Chapter Summary
+略
 
