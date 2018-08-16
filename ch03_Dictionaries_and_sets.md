@@ -128,6 +128,10 @@ can have  frozenset elements inside a  set.
 """
 Literal set syntax like {1, 2, 3} is both faster and more readable than calling the
 constructor (e.g., set([1, 2, 3])).
+
+這篇解釋更詳細
+https://stackoverflow.com/questions/30216000/why-is-faster-than-list
+
 """
 >>> from dis import dis
 >>> dis('{1}')                                   
